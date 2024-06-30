@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/users";
+import { Login, Register } from "./pages/auth";
 
 function App() {
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = React.useState(0);
 
   return (
-    <>
-      Hello world {count}
-      <button onClick={() => setCount(count + 1)}>+</button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
