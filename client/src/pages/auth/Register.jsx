@@ -1,5 +1,6 @@
 import React from 'react'
 import { GoogleIcon } from '../../assets/icons'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
   return (
@@ -10,7 +11,9 @@ const Register = () => {
           <p class="text-center text-3xl font-bold md:text-left md:leading-tight">Create your free account</p>
           <p class="mt-4 text-center font-medium md:text-left">
             Already have an account?
-            <a href="#" class="whitespace-nowrap font-semibold text-blue-700"> Login here</a>
+            <Link to={'/login'} >
+              <a href="" class="whitespace-nowrap font-semibold text-blue-700"> Login here</a>
+            </Link>
           </p>
           <button class="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"><img class="mr-2 h-5" src={GoogleIcon} alt /> Get started with Google</button>
           <div class="relative mt-8 flex h-px place-items-center bg-gray-200">

@@ -1,0 +1,105 @@
+import bcrypt from 'bcrypt'
+import User from '../models/user.model.js';
+
+
+export const register = async (req, res) => {
+
+    try {
+        const { name, email, password, confirmPassword } = req.body;
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                status: false,
+                error: "Password don't match"
+            })
+        }
+
+        const isEmailExist = await User.findOne({ email })
+
+        if (isEmailExist) {
+            return res.status(400).json({
+                status: false,
+                error: "email already exists"
+            });
+        }
+
+        // hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({
+            name,
+            email,
+            password: hashedPassword,
+        })
+
+        if (newUser) {
+
+            //TODO generate JWT token.
+
+            await newUser.save();
+            res.status(201).json({
+                status: true,
+                _id: newUser._id,
+                name: newUser.name,
+            })
+
+        } else {
+            res.status(400).json({
+                status: false,
+                error: "Invalid user data"
+            })
+        }
+
+    } catch (error) {
+        console.log("Error in register controller", error.message);
+        res.status(500).json({
+            status: false,
+            error: "Internal Server Error"
+        })
+    }
+}
+
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password || " ");
+
+        if (!user || !isPasswordCorrect) {
+            return res.status(400).json({
+                status: false,
+                error: "Invalid email or password"
+            });
+        }
+
+        //TODO generate JWT token.
+
+        res.status(200).json({
+            msg: "Login success",
+            status: true,
+            _id: user._id,
+            name: user.name,
+        });
+
+    } catch (error) {
+        console.log("Error in login controller", error.message);
+        res.status(500).json({
+            status: false,
+            error: "Internal Server Error"
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+export const logOut = async (req, res) => {
+
+}
