@@ -42,6 +42,7 @@ const Register = () => {
                 <input type="text"
                   value={name}
                   onChange={(e) => { setName(e.target.value) }}
+                  required
                   id="login-name" className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Name" />
               </div>
             </div>
@@ -50,6 +51,7 @@ const Register = () => {
                 <input type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value) }}
+                  required
                   id="login-email" className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Email" />
               </div>
             </div>
@@ -58,6 +60,7 @@ const Register = () => {
                 <input type="password" id="login-password"
                   value={password}
                   onChange={(e) => { setPassword(e.target.value) }}
+                  required
                   className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password (minimum 8 characters)" />
               </div>
             </div>
@@ -66,6 +69,7 @@ const Register = () => {
                 <input type="password"
                   value={confirmPassword}
                   onChange={(e) => { setConfirmPassword(e.target.value) }}
+                  required
                   id="confirm-login-password" className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password (minimum 8 characters)" />
               </div>
             </div>

@@ -1,11 +1,17 @@
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { handleLoginError } from '../utils/validator';
 
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const useLogin = () => {
     const login = async (email, password) => {
+
+        const success = handleLoginError({ email, password })
+        if (!success) {
+            return
+        }
         try {
             const res = await axios.post(`${BASE_URL}/api/auth/login`, {
                 email,
