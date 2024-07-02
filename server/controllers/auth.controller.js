@@ -64,17 +64,30 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
-        const isPasswordCorrect = await bcrypt.compare(password, user?.password || " ");
-
-        if (!user || !isPasswordCorrect) {
+        
+        if (!email || !password) {
             return res.status(400).json({
                 status: false,
+                error: "Email and password are required"
+            });
+        }
+
+        const user = await User.findOne({ email });
+        console.log(user);
+        if (!user) {
+            return res.status(401).json({
                 error: "Invalid email or password"
             });
         }
 
-        //TODO generate JWT token.
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(401).json({
+                error: "Invalid email or password"
+            });
+        }
+
+        // TODO: Generate JWT token and include it in the response
 
         res.status(200).json({
             msg: "Login success",
@@ -84,14 +97,13 @@ export const login = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("Error in login controller", error.message);
+        console.error("Error in login controller", error.message);
         res.status(500).json({
             status: false,
             error: "Internal Server Error"
-        })
+        });
     }
-}
-
+};
 
 
 
