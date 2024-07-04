@@ -10,7 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { register } = useRegister();
+  const { register, loading } = useRegister();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ const Register = () => {
               <a href="" className="whitespace-nowrap font-semibold text-blue-700"> Login here</a>
             </Link>
           </p>
-          <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"><img className="mr-2 h-5" src={GoogleIcon}  /> Get started with Google</button>
+          <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"><img className="mr-2 h-5" src={GoogleIcon} /> Get started with Google</button>
           <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
             <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
           </div>
@@ -61,7 +61,7 @@ const Register = () => {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value) }}
                   required
-                  className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password (minimum 8 characters)" />
+                  className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password" />
               </div>
             </div>
             <div className="mb-4 flex flex-col">
@@ -70,10 +70,23 @@ const Register = () => {
                   value={confirmPassword}
                   onChange={(e) => { setConfirmPassword(e.target.value) }}
                   required
-                  id="confirm-login-password" className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password (minimum 8 characters)" />
+                  id="confirm-login-password" className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Re-enter Password" />
               </div>
             </div>
-            <button type="submit" className=" w-full rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2">Sign in</button>
+            <button
+              type="submit"
+              className={`${loading ? 'cursor-not-allowed' : ''} flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-60`}
+              disabled={loading}
+            >
+              {
+                loading ?
+                  <div
+                    className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status">
+                  </div> :
+                  'Register'
+              }
+            </button>
           </form>
         </div>
       </div>

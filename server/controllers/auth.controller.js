@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import User from '../models/user.model.js';
+import generateTokenAndSetCookie from '../routes/generateToken.js';
 
 
 export const register = async (req, res) => {
@@ -35,11 +36,12 @@ export const register = async (req, res) => {
 
         if (newUser) {
 
-            //TODO generate JWT token.
+            const token = generateTokenAndSetCookie(newUser._id, res);
 
             await newUser.save();
             res.status(201).json({
                 status: true,
+                token,
                 _id: newUser._id,
                 name: newUser.name,
             })
@@ -64,7 +66,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         if (!email || !password) {
             return res.status(400).json({
                 status: false,
@@ -87,11 +89,11 @@ export const login = async (req, res) => {
             });
         }
 
-        // TODO: Generate JWT token and include it in the response
+        const token = generateTokenAndSetCookie(user._id, res);
 
         res.status(200).json({
             msg: "Login success",
-            status: true,
+            token,
             _id: user._id,
             name: user.name,
         });
@@ -104,8 +106,6 @@ export const login = async (req, res) => {
         });
     }
 };
-
-
 
 
 
