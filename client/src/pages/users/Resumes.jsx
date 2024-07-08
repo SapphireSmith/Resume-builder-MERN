@@ -2,7 +2,9 @@ import React from 'react'
 
 const Resumes = () => {
   return (
-    <div>Resumes</div>
+    <div className='flex-2'>
+      <p className='text-white'>Resumes</p>
+    </div>
   )
 }
 

@@ -6,14 +6,14 @@ import Resumes from './Resumes'
 
 const Dashboard = () => {
   return (
-    <div className='app_dashboard'>
-      <div className='flex'>
-      <SideNav />
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard/resumes" />} />
-        <Route path='/resumes' element={<Resumes />} />
-        <Route path='/settings' element={<Settings />} />
-      </Routes>
+    <div className='bg-black w-full h-screen'>
+      <div className='flex w-full h-full py-2'>
+        <SideNav />
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard/resumes" />} />
+          <Route path='/resumes' element={<Resumes />} />
+          <Route path='/settings' element={<Settings />} />
+        </Routes>
       </div>
     </div>
   )
