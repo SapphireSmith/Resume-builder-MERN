@@ -1,8 +1,16 @@
+import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
+import MenuBar from '../../Components/MenuBar';
 
 const Settings = () => {
   const [accountEditable, setAccountEditable] = useState(false);
   const [securityEditable, setSecurityEditable] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const [accountData, setAccountData] = useState({
     name: 'dummy_name',
     email: 'dummy_email',
@@ -52,10 +60,14 @@ const Settings = () => {
 
   return (
     <div className="w-full h-full  text-white">
-      <nav className='w-full p-[15px] px-3 text-xl md:text-2xl lg:text-3xl font-semibold'>
+      <nav className='flex gap-2 items-center w-full p-[15px] px-3 text-xl md:text-2xl lg:text-3xl font-semibold'>
+        <Bars3BottomLeftIcon className='size-4 sm:hidden' onClick={toggleMenu} />
         <h2>Settings</h2>
       </nav>
-      <div className="space-y-6">
+
+      <MenuBar isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+
+      <div className="px-6">
         <div className="border-b-[0.1px] border-gray-500 pb-4">
           <h3 className="text-xl font-semibold mb-2">Account</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

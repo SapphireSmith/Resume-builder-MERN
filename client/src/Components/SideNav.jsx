@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DocumentTextIcon, Cog6ToothIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { useAuthContext } from '../context/AuthContext';
 
-const SideNav = () => {
+const MenuBar = () => {
   const { setAuthUser } = useAuthContext();
   let navigate = useNavigate();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -36,7 +36,7 @@ const SideNav = () => {
   return (
     <div className='hidden sm:flex flex-col w-[23%] px-5 text-white h-full'>
       <div className='flex items-center h-[8%] border-b-[0.1px] border-gray-500'>
-        <Link className='min-[638px]:text-xs min-[700px]:text-sm  min-[874px]:text-xl font-medium' to={'/'}>Resume Builder</Link>
+        <Link className='min-[638px]:text-xs min-[700px]:text-sm  min-[874px]:text-[17px] min-[1035px]:text-xl font-medium' to={'/'}>Resume Builder</Link>
       </div>
       <div className='flex flex-col gap-2 py-3 h-[70%] border-b-[0.1px] border-gray-500'>
         <Link to={'/dashboard/resumes'}>
@@ -70,4 +70,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default MenuBar;
