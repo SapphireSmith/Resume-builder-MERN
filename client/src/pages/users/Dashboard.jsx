@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import SideNav from '../../Components/SideNav';
 import Settings from './Settings';
 import Resumes from './Resumes';
+import CreateResume from './CreateResume';
 
 const Dashboard = () => {
   return (
