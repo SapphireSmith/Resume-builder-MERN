@@ -4,8 +4,10 @@ import Template from '../../Components/Template';
 import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 
 const CreateResume = () => {
+    const [toggle, setToggle] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         jobTitle: '',
@@ -51,18 +53,26 @@ const CreateResume = () => {
             });
     };
 
+    const toggleMenu = () => {
+        setToggle(!toggle)
+
+    }
+
     return (
         <div className='bg-black w-full h-screen flex items-center justify-center'>
             <div className='flex w-full h-full'>
-                <div className='w-full md:w-1/3 hidden md:block border-2 overflow-y-auto max-w-[1273px]'>
+                <div className={` md:w-1/3  lg:block lg:static ${toggle ? 'absolute bg-black block w-[70%] h-screen' : 'hidden w-full'}  overflow-y-auto max-w-[1273px]`}>
                     <ResumeForm
                         onInputChange={handleInputChange}
                         onFileChange={handleFileChange}
                         formData={formData}
+                        toggle={toggle}
+                        setToggle={setToggle}
                     />
                 </div>
-                <div className='w-full md:w-2/3 overflow-y-scroll p-6'>
-                    <div className='px-3 py-4 flex justify-end'>
+                <div className='w-full lg:w-2/3 overflow-y-scroll p-6'>
+                    <div className='px-3 py-4 flex items-center justify-between '>
+                        <Bars3BottomLeftIcon className={`size-6 lg:hidden`} color='white' onClick={toggleMenu} />
                         <button onClick={printResume} className='bg-green-400 text-black px-4 py-2 rounded-lg'>Print</button>
                     </div>
                     <Template ref={templateRef} formData={formData} />

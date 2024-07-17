@@ -3,22 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    font-family: "Poppins", sans-serif;
+body {
+  font-family: "Poppins", sans-serif;
 }
 
 @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(10px);
   }
-  
-  .animate-slide-in {
-    animation: slideIn 0.3s ease-in-out;
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}
