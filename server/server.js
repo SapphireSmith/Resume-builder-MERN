@@ -5,6 +5,7 @@ import cors from "cors"
 
 import connectToMongoDb from "./db/config.js";
 import authRoutes from './routes/auth.routes.js'
+import userRoutes from './routes/user.routes.js'
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies 
 
 
 app.use("/api/auth", authRoutes)
+app.use("/api/user", userRoutes)
 
 // display hello world message
 app.get('/', (req, res) => {

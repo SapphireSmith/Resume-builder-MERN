@@ -1,7 +1,9 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { dummyData } from '../utils/data';
 
 const ResumeForm = ({ onInputChange, onFileChange, formData, toggle, setToggle, }) => {
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         const nameParts = name.split('.');
@@ -28,10 +30,18 @@ const ResumeForm = ({ onInputChange, onFileChange, formData, toggle, setToggle, 
         onFileChange(file);
     };
 
+    const loadData = () => {
+
+        Object.keys(dummyData).forEach(key => {
+            onInputChange(key, dummyData[key]);
+        });
+    };
+
     return (
         <div className='p-4'>
-            {toggle && <XMarkIcon className='size-6 mb-4' color='white' onClick={()=>setToggle(false)} />}
+            {toggle && <XMarkIcon className='size-6 mb-4' color='white' onClick={() => setToggle(false)} />}
             <h2 className='text-2xl mb-4 text-white font-bold'>Enter Details</h2>
+            <button className='bg-green-500 rounded-md px-2 py-2 text-xs text-black font-medium my-5 hover:bg-green-400 delay-150 duration-300 ' onClick={loadData}>Load sample data</button>
             <div className='mb-4'>
                 <label className='block text-white mb-1'>Name</label>
                 <input

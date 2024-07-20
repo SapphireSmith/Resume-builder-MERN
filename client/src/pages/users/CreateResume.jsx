@@ -44,7 +44,7 @@ const CreateResume = () => {
         const input = document.getElementById('resume-content');
         html2canvas(input, { scale: 2 }) // Adjust scale for better quality
             .then(canvas => {
-                const imgData = canvas.toDataURL('image/jpeg', 0.8); // Use JPEG format for smaller size
+                const imgData = canvas.toDataURL('image/jpeg', 0.5); // Use JPEG format for smaller size
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
