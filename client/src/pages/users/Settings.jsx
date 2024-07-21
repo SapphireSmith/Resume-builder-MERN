@@ -7,7 +7,7 @@ import { useAuthContext } from '../../context/AuthContext';
 
 const Settings = () => {
 
-  const { setAuthUser } = useAuthContext()
+  const { setAuthUser } = useAuthContext();
   const [accountEditable, setAccountEditable] = useState(false);
   const [securityEditable, setSecurityEditable] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +19,6 @@ const Settings = () => {
   const [accountData, setAccountData] = useState({
     name: '',
     email: '',
-    username: ''
   });
 
   const [securityData, setSecurityData] = useState({
@@ -45,7 +44,6 @@ const Settings = () => {
         setOriginalAccountData({
           name: response.data.name,
           email: response.data.email,
-          username: response.data.username
         });
 
         setOriginalSecurityData({
@@ -57,14 +55,13 @@ const Settings = () => {
         setAccountData({
           name: response.data.name,
           email: response.data.email,
-          username: response.data.username
         });
       } catch (error) {
         if (error.response && error.response.data.message === 'Token has expired') {
           // Clear the token and redirect to the home page
-          alert('login again session expired')
+          alert('login again session expired');
           localStorage.removeItem('user-jwt-token');
-          setAuthUser(null)
+          setAuthUser(null);
           navigate('/');
         } else {
           // Handle other errors
@@ -92,6 +89,33 @@ const Settings = () => {
     if (section === 'account') {
       setAccountEditable(false);
       // Save account data logic here
+      try {
+        const token = localStorage.getItem('user-jwt-token');
+        const response = await axios.post(
+          'http://localhost:4000/api/user/update-profile',
+          {
+            name: accountData.name,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        alert('Profile updated successfully');
+        setOriginalAccountData({ ...accountData });
+      } catch (error) {
+        if (error.response && error.response.data.message === 'Token has expired') {
+          // Clear the token and redirect to the home page
+          alert('login again session expired');
+          localStorage.removeItem('user-jwt-token');
+          setAuthUser(null);
+          navigate('/');
+        } else {
+          // Handle other errors
+          console.error('Error updating profile:', error);
+        }
+      }
     } else if (section === 'security') {
       if (securityData.newPassword !== securityData.confirmPassword) {
         alert('Passwords do not match');
@@ -118,9 +142,9 @@ const Settings = () => {
       } catch (error) {
         if (error.response && error.response.data.message === 'Token has expired') {
           // Clear the token and redirect to the home page
-          alert('session expired login again')
+          alert('session expired login again');
           localStorage.removeItem('user-jwt-token');
-          setAuthUser(null)
+          setAuthUser(null);
           navigate('/');
         } else {
           // Handle other errors
@@ -160,13 +184,13 @@ const Settings = () => {
         }
       );
       localStorage.removeItem('user-jwt-token');
-      setAuthUser(null)
+      setAuthUser(null);
       navigate('/');
     } catch (error) {
       if (error.response && error.response.data.message === 'Token has expired') {
         // Clear the token and redirect to the home page
         localStorage.removeItem('user-jwt-token');
-        setAuthUser(null)
+        setAuthUser(null);
         navigate('/');
       } else {
         // Handle other errors
@@ -188,17 +212,18 @@ const Settings = () => {
         <div className="border-b-[0.1px] border-gray-500 pb-4">
           <h3 className="text-xl font-semibold mb-2">Account</h3>
           <div className="grid my-8 grid-cols-1 sm:grid-cols-2 gap-4">
-            {['name', 'email', 'username'].map((field) => (
+            {['name', 'email'].map((field) => (
               <div key={field} className="flex flex-col items-start">
                 <label htmlFor={field} className="w-full capitalize mb-2">{field}</label>
                 <div className='flex w-full'>
                   <input
                     id={field}
                     type={field === 'email' ? 'text' : 'text'}
-                    className={`w-full p-2 rounded-md text-white bg-black border-[0.1px] border-gray-500 ${field === 'email' ? 'bg-[#777777] text-[#dbdbdb]' : ''}`}
+                    className={`w-full p-2 rounded-md text-white bg-black border-[0.1px] border-gray-500 ${field === 'email' ? 'bg-[#4e4e4e] text-[#c6c6c6]' : ''}`}
                     value={accountData[field]}
                     onChange={(e) => handleInputChange('account', field, e.target.value)}
                     disabled={field === 'email'} // Disable email field
+                    required
                   />
                 </div>
               </div>

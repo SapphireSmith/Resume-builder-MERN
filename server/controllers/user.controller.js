@@ -112,3 +112,43 @@ export const accountDelete = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+export const updateProfile = async (req, res) => {
+    try {
+        // 1. Validate JWT Token
+        const token = req.headers.authorization?.split(' ')[1]; // Extract token from headers
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        // 2. Retrieve user from the database
+        const user = await User.findById(decoded.userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // 3. Validate the new name
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({ message: 'Name is required' });
+        }
+
+        // 4. Update the user's name
+        user.name = name;
+        await user.save();
+
+        // 5. Send success response
+        res.status(200).json({ message: 'Profile updated successfully', user });
+
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
